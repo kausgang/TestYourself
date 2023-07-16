@@ -1,0 +1,16 @@
+{
+  "name": "testyourself",
+  "version": "1.0.0",
+  "description": "If you have a set of questions that you want to practice with",
+  "main": "index.js",
+  "scripts": {
+    "client": "cd client && npm i && npm start",
+    "start": "concurrently \"npm run client\" "
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^8.2.0"
+  }
+}

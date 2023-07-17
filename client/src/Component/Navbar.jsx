@@ -26,8 +26,8 @@ function Navbar(props) {
       >
         <Nav.Item>
           <Nav.Link onClick={showDBs}>DB</Nav.Link>
-          {/* <ul style={{ listStyleType: "none" }}>{rows}</ul> */}
         </Nav.Item>
+
         {/* <Nav.Item>
           <Nav.Link eventKey="link-1">Option 2</Nav.Link>
         </Nav.Item>

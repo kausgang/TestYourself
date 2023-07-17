@@ -13,6 +13,7 @@ import Button from "react-bootstrap/Button";
 // ES6 Modules or TypeScript
 import Swal from "sweetalert2";
 import AddQuestion from "./Component/AddQuestion";
+import Practice from "./Component/Practice";
 
 function App() {
   const urls = {
@@ -22,13 +23,19 @@ function App() {
   };
   const [db, setDb] = useState([]);
   const [viewAddQuestion, setViewAddQuestion] = useState(false);
+  const [viewPractice, setViewPractice] = useState(false);
   const [selectedDB, setSelectedDB] = useState("");
 
   //if DB tab is clicked, fetch the list of dbs and show in cards
   const showDBs = (data) => {
     setDb(
       data.map((element, index) => (
-        <DbCard key={index} title={element} addQuestion={addQuestion} />
+        <DbCard
+          key={index}
+          title={element}
+          addQuestion={addQuestion}
+          practice={practice}
+        />
       ))
     );
   };
@@ -88,7 +95,7 @@ function App() {
             Swal.fire({
               title: "DB created",
               icon: "success",
-              confirmButtonText: "Cool",
+              confirmButtonText: "Ok",
             });
             //refresh dbcards
             fetch(urls.showDBs)
@@ -100,6 +107,7 @@ function App() {
                       key={index}
                       title={element}
                       addQuestion={addQuestion}
+                      practice={practice}
                     />
                   ))
                 );
@@ -127,14 +135,36 @@ function App() {
   // collect db name
   const addQuestion = (selectedDB) => {
     console.log(selectedDB);
-    setViewAddQuestion(() => !viewAddQuestion);
+    setViewAddQuestion(true);
+    setViewPractice(false);
     setSelectedDB(selectedDB);
-    // postData(urls.addQuestion, {
-    //   dbname: selectedDB,
-    //   question,
-    //   answer,
-    //   reference,
-    // });
+  };
+
+  //on practice
+  // hide question window
+  // make random question window visible
+  // generate question
+  const practice = async () => {
+    setViewPractice(true);
+    setViewAddQuestion(false);
+  };
+
+  const submitQuestion = async (question, answer, reference) => {
+    postData(urls.addQuestion, {
+      dbname: selectedDB,
+      question,
+      answer,
+      reference,
+    }).then((data) => {
+      console.log(data); // JSON data parsed by `data.json()` call
+      if (data.status === 200) {
+        Swal.fire({
+          title: "Question Added",
+          icon: "success",
+          confirmButtonText: "Ok",
+        });
+      }
+    });
   };
 
   return (
@@ -159,7 +189,13 @@ function App() {
           </Col>
           <Col>
             <div hidden={viewAddQuestion ? false : true}>
-              <AddQuestion viewAddQuestion={viewAddQuestion} />
+              <AddQuestion
+                viewAddQuestion={viewAddQuestion}
+                submitQuestion={submitQuestion}
+              />
+            </div>
+            <div hidden={viewPractice ? false : true}>
+              <Practice />
             </div>
           </Col>
         </Row>

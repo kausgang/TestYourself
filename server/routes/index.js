@@ -31,8 +31,10 @@ router.post("/addQuestion", function (req, res, next) {
     answer = req.body.answer,
     reference = req.body.reference;
 
+  console.log(dbname, question, answer, reference);
+
   // create the database and tables
-  let db = new sqlite3.Database("public/DB/" + dbname + ".db");
+  let db = new sqlite3.Database("public/DB/" + dbname);
 
   let data = [question, answer, reference];
   db.run(
@@ -65,7 +67,10 @@ router.get("/getQuestion", function (req, res, next) {
     if (err) {
       throw err;
     }
+
     res.send(rows);
   });
+
+  db.close();
 });
 module.exports = router;

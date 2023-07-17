@@ -210,8 +210,25 @@ function App() {
       });
   };
 
-  const showAll = async () => {
-    console.log("implement showall");
+  const showAll = async (selectedDB) => {
+    // console.log("implement showall");
+    setSelectedDB(selectedDB);
+    console.log(selectedDB);
+    fetch(urls.getQuestionAll + "?dbname=" + selectedDB)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        // setQuestion(data.question);
+        // setAnswer(data.answer);
+        // setReference(data.reference);
+      })
+      .catch((error) => {
+        console.error(
+          "There has been a problem with your fetch operation:",
+          error
+        );
+        alert("Server Down");
+      });
   };
   return (
     <>

@@ -59,7 +59,7 @@ router.get("/getQuestion", function (req, res, next) {
   //get the DBname from client application
   let dbname = req.query.dbname;
 
-  let db = new sqlite3.Database("public/DB/" + dbname + ".db");
+  let db = new sqlite3.Database("public/DB/" + dbname);
 
   let sql = `SELECT * FROM questions`;
 

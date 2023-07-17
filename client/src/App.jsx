@@ -20,6 +20,7 @@ function App() {
     showDBs: "http://localhost:4000/showDBs",
     createDB: "http://localhost:4000/createDB",
     addQuestion: "http://localhost:4000/addQuestion",
+    getQuestion: "http://localhost:4000/getQuestion",
   };
   const [db, setDb] = useState([]);
   const [viewAddQuestion, setViewAddQuestion] = useState(false);
@@ -144,9 +145,24 @@ function App() {
   // hide question window
   // make random question window visible
   // generate question
-  const practice = async () => {
+  const practice = async (selectedDB) => {
+    setSelectedDB(selectedDB);
+
     setViewPractice(true);
     setViewAddQuestion(false);
+
+    fetch(urls.getQuestion + "?dbname=" + selectedDB)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error(
+          "There has been a problem with your fetch operation:",
+          error
+        );
+        alert("Server Down");
+      });
   };
 
   const submitQuestion = async (question, answer, reference) => {

@@ -6,6 +6,7 @@ import ButtonToolbar from "react-bootstrap/ButtonToolbar";
 
 function DbCard(props) {
   const addQuestion = () => props.addQuestion(props.title);
+  const practice = () => props.practice(props.title);
   return (
     <Card style={{ width: "18rem" }}>
       {/* <Card.Img variant="top" src="holder.js/100px180" /> */}
@@ -22,7 +23,7 @@ function DbCard(props) {
             </Button>
           </ButtonGroup>
           <ButtonGroup className="me-2" aria-label="First group">
-            <Button variant="primary" onClick={props.practice}>
+            <Button variant="primary" onClick={practice}>
               Practice
             </Button>
           </ButtonGroup>

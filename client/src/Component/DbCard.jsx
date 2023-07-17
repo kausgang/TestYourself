@@ -1,10 +1,10 @@
-import React from 'react'
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
+import React from "react";
+import Card from "react-bootstrap/Card";
+import Button from "react-bootstrap/Button";
 
 function DbCard(props) {
   return (
-    <Card style={{ width: '18rem' }}>
+    <Card style={{ width: "18rem" }}>
       {/* <Card.Img variant="top" src="holder.js/100px180" /> */}
       <Card.Body>
         <Card.Title>{props.title}</Card.Title>
@@ -14,12 +14,11 @@ function DbCard(props) {
         </Card.Text> */}
         {/* <Button variant="secondary">Go somewhere</Button>
         <Button variant="primary">Go somewhere</Button> */}
-        <Card.Link href="#">Card Link</Card.Link>
-        <Card.Link href="#">Another Link</Card.Link>
+        <Card.Link href="#">Add Question</Card.Link>
+        <Card.Link href="#">Practice</Card.Link>
       </Card.Body>
     </Card>
-
-  )
+  );
 }
 
-export default DbCard
+export default DbCard;

@@ -31,7 +31,13 @@ function App() {
           <SearchBar />
         </Row>
         <Row>
-          <Col>{db}</Col>
+          <Col className="m-4">
+            <Stack gap={3}>{db}</Stack>
+          </Col>
+          <Col>
+            Give add question form here. Visible only when Add question button
+            is clicked
+          </Col>
         </Row>
       </Container>
     </>

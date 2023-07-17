@@ -40,6 +40,7 @@ function App() {
           title={element}
           addQuestion={addQuestion}
           practice={practice}
+          showAll={showAll}
         />
       ))
     );
@@ -113,6 +114,7 @@ function App() {
                       title={element}
                       addQuestion={addQuestion}
                       practice={practice}
+                      showAll={showAll}
                     />
                   ))
                 );
@@ -208,6 +210,9 @@ function App() {
       });
   };
 
+  const showAll = async () => {
+    console.log("implement showall");
+  };
   return (
     <>
       <Container>

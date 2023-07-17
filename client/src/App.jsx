@@ -190,6 +190,24 @@ function App() {
     });
   };
 
+  const changeQuestion = async () => {
+    fetch(urls.getQuestionOne + "?dbname=" + selectedDB)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setQuestion(data.question);
+        setAnswer(data.answer);
+        setReference(data.reference);
+      })
+      .catch((error) => {
+        console.error(
+          "There has been a problem with your fetch operation:",
+          error
+        );
+        alert("Server Down");
+      });
+  };
+
   return (
     <>
       <Container>
@@ -222,6 +240,7 @@ function App() {
                 question={question[0]}
                 answer={answer[0]}
                 reference={reference[0]}
+                changeQuestion={changeQuestion}
               />
             </div>
           </Col>

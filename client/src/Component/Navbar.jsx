@@ -1,45 +1,28 @@
 import React,{useState,useEffect} from "react";
 import Nav from "react-bootstrap/Nav";
-import DbCard from "./DbCard";
+
 
 
 function Navbar(props) {
 
   
 
-  // useEffect(
-  //   // rows.map((element)=><DbCard title={element} />)
-  //   setRows()
-  // )
+
 
   const showDBs=()=>{
 
-   
-
+  
     fetch(props.urls.showDBs)
         .then((res) => res.json())
         .then((data) => {
-          console.log("data=", data);
-
-       
           props.showDBs(data)
-        // setRows(
-        //   data.map((element)=><DbCard title={element} />)
-        // )
-
-          // // randomize the puzzles
-          // // shuffleArray(data);
-          // setGames(data);
-          // setLoading(false);
         })
-        .catch((error) => {
-          
+        .catch((error) => {         
           console.error(
             "There has been a problem with your fetch operation:",
             error
           );
           alert("Server Down");
-          // setLoading(false);
         });
   }
 

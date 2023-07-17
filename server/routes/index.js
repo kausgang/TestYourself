@@ -53,7 +53,7 @@ router.post("/addQuestion", function (req, res, next) {
   res.sendStatus(200);
 });
 
-router.get("/getQuestion", function (req, res, next) {
+router.get("/getQuestionAll", function (req, res, next) {
   //the request has to be in the form -http://localhost:3000/getQuestion?dbname=salesforce
 
   //get the DBname from client application
@@ -69,6 +69,29 @@ router.get("/getQuestion", function (req, res, next) {
     }
 
     res.send(rows);
+  });
+
+  db.close();
+});
+
+router.get("/getQuestionOne", function (req, res, next) {
+  //the request has to be in the form -http://localhost:3000/getQuestion?dbname=salesforce
+
+  //get the DBname from client application
+  let dbname = req.query.dbname;
+
+  let db = new sqlite3.Database("public/DB/" + dbname);
+
+  let sql = `SELECT * FROM questions`;
+
+  db.all(sql, [], (err, rows) => {
+    if (err) {
+      throw err;
+    }
+
+    let randomElement = rows[Math.floor(Math.random() * rows.length)];
+
+    res.send(randomElement);
   });
 
   db.close();

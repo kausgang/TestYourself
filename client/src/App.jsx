@@ -20,12 +20,16 @@ function App() {
     showDBs: "http://localhost:4000/showDBs",
     createDB: "http://localhost:4000/createDB",
     addQuestion: "http://localhost:4000/addQuestion",
-    getQuestion: "http://localhost:4000/getQuestion",
+    getQuestionOne: "http://localhost:4000/getQuestionOne",
+    getQuestionAll: "http://localhost:4000/getQuestionAll",
   };
   const [db, setDb] = useState([]);
   const [viewAddQuestion, setViewAddQuestion] = useState(false);
   const [viewPractice, setViewPractice] = useState(false);
   const [selectedDB, setSelectedDB] = useState("");
+  const [question, setQuestion] = useState("");
+  const [answer, setAnswer] = useState("");
+  const [reference, setReference] = useState("");
 
   //if DB tab is clicked, fetch the list of dbs and show in cards
   const showDBs = (data) => {
@@ -151,10 +155,13 @@ function App() {
     setViewPractice(true);
     setViewAddQuestion(false);
 
-    fetch(urls.getQuestion + "?dbname=" + selectedDB)
+    fetch(urls.getQuestionOne + "?dbname=" + selectedDB)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
+        setQuestion(data.question);
+        setAnswer(data.answer);
+        setReference(data.reference);
       })
       .catch((error) => {
         console.error(
@@ -211,7 +218,11 @@ function App() {
               />
             </div>
             <div hidden={viewPractice ? false : true}>
-              <Practice />
+              <Practice
+                question={question[0]}
+                answer={answer[0]}
+                reference={reference[0]}
+              />
             </div>
           </Col>
         </Row>

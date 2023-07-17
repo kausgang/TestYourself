@@ -15,13 +15,22 @@ import Swal from "sweetalert2";
 import AddQuestion from "./Component/AddQuestion";
 
 function App() {
-  const urls = { showDBs: "http://localhost:4000/showDBs",createDB:"http://localhost:4000/createDB" };
+  const urls = {
+    showDBs: "http://localhost:4000/showDBs",
+    createDB: "http://localhost:4000/createDB",
+    addQuestion: "http://localhost:4000/addQuestion",
+  };
   const [db, setDb] = useState([]);
-  
+  const [viewAddQuestion, setViewAddQuestion] = useState(false);
+  const [selectedDB, setSelectedDB] = useState("");
 
   //if DB tab is clicked, fetch the list of dbs and show in cards
   const showDBs = (data) => {
-    setDb(data.map((element, index) => <DbCard key={index} title={element} />));
+    setDb(
+      data.map((element, index) => (
+        <DbCard key={index} title={element} addQuestion={addQuestion} />
+      ))
+    );
   };
 
   //if search string is entered
@@ -70,7 +79,7 @@ function App() {
 
     if (formValues) {
       // console.log(formValues);
-      postData(, {
+      postData(urls.createDB, {
         dbname: formValues[0],
       })
         .then((data) => {
@@ -87,7 +96,11 @@ function App() {
               .then((data) => {
                 setDb(
                   data.map((element, index) => (
-                    <DbCard key={index} title={element} />
+                    <DbCard
+                      key={index}
+                      title={element}
+                      addQuestion={addQuestion}
+                    />
                   ))
                 );
               })
@@ -107,6 +120,21 @@ function App() {
           alert("Server Down");
         });
     }
+  };
+
+  //on add question
+  // show question form
+  // collect db name
+  const addQuestion = (selectedDB) => {
+    console.log(selectedDB);
+    setViewAddQuestion(() => !viewAddQuestion);
+    setSelectedDB(selectedDB);
+    // postData(urls.addQuestion, {
+    //   dbname: selectedDB,
+    //   question,
+    //   answer,
+    //   reference,
+    // });
   };
 
   return (
@@ -130,7 +158,9 @@ function App() {
             <Stack gap={3}>{db}</Stack>
           </Col>
           <Col>
-            <AddQuestion viewAddQuestion={viewAddQuestion} />
+            <div hidden={viewAddQuestion ? false : true}>
+              <AddQuestion viewAddQuestion={viewAddQuestion} />
+            </div>
           </Col>
         </Row>
       </Container>

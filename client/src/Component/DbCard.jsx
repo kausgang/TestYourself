@@ -1,8 +1,11 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
+import ButtonToolbar from "react-bootstrap/ButtonToolbar";
 
 function DbCard(props) {
+  const addQuestion = () => props.addQuestion(props.title);
   return (
     <Card style={{ width: "18rem" }}>
       {/* <Card.Img variant="top" src="holder.js/100px180" /> */}
@@ -12,10 +15,20 @@ function DbCard(props) {
           Some quick example text to build on the card title and make up the
           bulk of the card's content.
         </Card.Text> */}
-        {/* <Button variant="secondary">Go somewhere</Button>
-        <Button variant="primary">Go somewhere</Button> */}
-        <Card.Link href="#">Add Question</Card.Link>
-        <Card.Link href="#">Practice</Card.Link>
+        <ButtonToolbar aria-label="Toolbar with button groups">
+          <ButtonGroup className="me-2" aria-label="First group">
+            <Button variant="secondary" onClick={addQuestion}>
+              Add Question
+            </Button>
+          </ButtonGroup>
+          <ButtonGroup className="me-2" aria-label="First group">
+            <Button variant="primary" onClick={props.practice}>
+              Practice
+            </Button>
+          </ButtonGroup>
+        </ButtonToolbar>
+        {/* <Card.Link onClick={props.addQuestion}>Add Question</Card.Link>
+        <Card.Link href="#">Practice</Card.Link> */}
       </Card.Body>
     </Card>
   );

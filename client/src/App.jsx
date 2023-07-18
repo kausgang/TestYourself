@@ -168,6 +168,10 @@ function App() {
     setViewAddQuestion(false);
     setViewShowAll(false);
 
+    setQuestion("");
+    setAnswer("");
+    setReference("");
+
     fetch(urls.getQuestionOne + "?dbname=" + selectedDB)
       .then((res) => res.json())
       .then((data) => {
@@ -274,6 +278,10 @@ function App() {
         </Row>
         <Row>
           <Col className="mt-3" xs={4}>
+            <h6>
+              Selected DB - <span className="text-danger">{selectedDB}</span>
+            </h6>
+
             <Stack gap={3}>{db}</Stack>
           </Col>
 
@@ -286,9 +294,9 @@ function App() {
             </div>
             <div hidden={viewPractice ? false : true}>
               <Practice
-                question={question[0]}
-                answer={answer[0]}
-                reference={reference[0]}
+                question={question}
+                answer={answer}
+                reference={reference}
                 changeQuestion={changeQuestion}
               />
             </div>

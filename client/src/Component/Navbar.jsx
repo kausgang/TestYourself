@@ -21,7 +21,7 @@ function Navbar(props) {
     <div>
       <Nav
         variant="tabs"
-        className="justify-content-center"
+        // className="justify-content-center"
         // defaultActiveKey="/home"
       >
         <Nav.Item>

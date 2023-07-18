@@ -3,7 +3,9 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
 function AddQuestion(props) {
-  const submitQuestion = () => {
+  const submitQuestion = (e) => {
+    e.preventDefault();
+
     let question = document.getElementById("question").value;
     let answer = document.getElementById("answer").value;
     let reference = document.getElementById("reference").value;

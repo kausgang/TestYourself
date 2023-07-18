@@ -112,7 +112,7 @@ function App() {
               icon: "success",
               confirmButtonText: "Ok",
             });
-            //refresh dbcards
+            // refresh dbcards
             fetch(urls.showDBs)
               .then((res) => res.json())
               .then((data) => {

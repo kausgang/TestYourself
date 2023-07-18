@@ -272,7 +272,7 @@ function App() {
             {/* <SearchBar onSearch={onSearch} /> */}
 
             <Button variant="primary" onClick={addDB}>
-              Add DB
+              Add Database
             </Button>
           </Stack>
         </Row>

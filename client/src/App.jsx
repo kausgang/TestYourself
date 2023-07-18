@@ -14,6 +14,7 @@ import Button from "react-bootstrap/Button";
 import Swal from "sweetalert2";
 import AddQuestion from "./Component/AddQuestion";
 import Practice from "./Component/Practice";
+import QAAccordian from "./Component/QAAccordian";
 
 function App() {
   const urls = {
@@ -26,13 +27,18 @@ function App() {
   const [db, setDb] = useState([]);
   const [viewAddQuestion, setViewAddQuestion] = useState(false);
   const [viewPractice, setViewPractice] = useState(false);
+  const [viewShowAll, setViewShowAll] = useState(false);
+  // const [viewHidedb, setViewHideDB] = useState(false);
   const [selectedDB, setSelectedDB] = useState("");
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
   const [reference, setReference] = useState("");
+  const [showAllList, setShowAllList] = useState("");
 
   //if DB tab is clicked, fetch the list of dbs and show in cards
   const showDBs = (data) => {
+    // setViewHideDB(true);
+
     setDb(
       data.map((element, index) => (
         <DbCard
@@ -45,6 +51,9 @@ function App() {
       ))
     );
   };
+
+  // hide db
+  // const hideDB = () => setViewHideDB(true);
 
   //if search string is entered
   const onSearch = (search) => {
@@ -144,6 +153,7 @@ function App() {
     console.log(selectedDB);
     setViewAddQuestion(true);
     setViewPractice(false);
+    setViewShowAll(false);
     setSelectedDB(selectedDB);
   };
 
@@ -156,14 +166,17 @@ function App() {
 
     setViewPractice(true);
     setViewAddQuestion(false);
+    setViewShowAll(false);
 
     fetch(urls.getQuestionOne + "?dbname=" + selectedDB)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        setQuestion(data.question);
-        setAnswer(data.answer);
-        setReference(data.reference);
+        if (data.length !== 0) {
+          setQuestion(data.question);
+          setAnswer(data.answer);
+          setReference(data.reference);
+        }
       })
       .catch((error) => {
         console.error(
@@ -196,7 +209,7 @@ function App() {
     fetch(urls.getQuestionOne + "?dbname=" + selectedDB)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         setQuestion(data.question);
         setAnswer(data.answer);
         setReference(data.reference);
@@ -212,15 +225,27 @@ function App() {
 
   const showAll = async (selectedDB) => {
     // console.log("implement showall");
+    setViewAddQuestion(false);
+    setViewPractice(false);
+    setViewShowAll(true);
+
     setSelectedDB(selectedDB);
-    console.log(selectedDB);
+
     fetch(urls.getQuestionAll + "?dbname=" + selectedDB)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        // setQuestion(data.question);
-        // setAnswer(data.answer);
-        // setReference(data.reference);
+
+        setShowAllList(
+          data.map((item, index) => (
+            <QAAccordian
+              key={index}
+              question={item.question}
+              answer={item.answer}
+              reference={item.reference}
+            />
+          ))
+        );
       })
       .catch((error) => {
         console.error(
@@ -240,16 +265,18 @@ function App() {
         </Row>
         <Row>
           <Stack direction="horizontal" gap={3} className="mt-3">
-            <SearchBar onSearch={onSearch} />
+            {/* <SearchBar onSearch={onSearch} /> */}
+
             <Button variant="primary" onClick={addDB}>
               Add DB
             </Button>
           </Stack>
         </Row>
         <Row>
-          <Col className="m-4">
+          <Col className="mt-3" xs={4}>
             <Stack gap={3}>{db}</Stack>
           </Col>
+
           <Col>
             <div hidden={viewAddQuestion ? false : true}>
               <AddQuestion
@@ -264,6 +291,9 @@ function App() {
                 reference={reference[0]}
                 changeQuestion={changeQuestion}
               />
+            </div>
+            <div hidden={viewShowAll ? false : true}>
+              <ul>{showAllList}</ul>
             </div>
           </Col>
         </Row>

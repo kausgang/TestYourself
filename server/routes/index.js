@@ -89,9 +89,11 @@ router.get("/getQuestionOne", function (req, res, next) {
       throw err;
     }
 
-    let randomElement = rows[Math.floor(Math.random() * rows.length)];
-
-    res.send(randomElement);
+    let randomElement = 0;
+    if (rows.length !== 0) {
+      randomElement = rows[Math.floor(Math.random() * rows.length)];
+      res.send(randomElement);
+    } else res.send(rows);
   });
 
   db.close();

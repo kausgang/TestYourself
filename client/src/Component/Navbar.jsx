@@ -25,7 +25,7 @@ function Navbar(props) {
         // defaultActiveKey="/home"
       >
         <Nav.Item>
-          <Nav.Link onClick={showDBs}>DB</Nav.Link>
+          <Nav.Link onClick={showDBs}>Show DB</Nav.Link>
         </Nav.Item>
 
         {/* <Nav.Item>

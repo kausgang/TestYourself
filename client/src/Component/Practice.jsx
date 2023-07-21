@@ -1,10 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Accordion from "react-bootstrap/Accordion";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
 function Practice(props) {
+  useEffect(() => {
+    // clear your answer
+    document.getElementById("yourAnswer").value = "";
+  }, [props]);
   const changeQuestion = () => props.changeQuestion();
+
   return (
     <>
       <Accordion defaultActiveKey={["0"]} alwaysOpen>
@@ -19,7 +24,7 @@ function Practice(props) {
           <Form.Group className="mb-3">
             <Form.Label>Your Answer</Form.Label>
             <Form.Control
-              id="question"
+              id="yourAnswer"
               as="textarea"
               placeholder="Enter your Answer"
               style={{ height: "100px" }}

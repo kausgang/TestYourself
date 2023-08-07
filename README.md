@@ -28,3 +28,5 @@ Use the Reveal Answer button
 2. Integrate with ChatGPT
 3. Database managemet from UI
 4. Make it a microservice application
+
+# to integrate with Chat GPT, create an environment variable with the name <u>VITE_OPENAI_API_KEY</u> and enter the value of API Key from chatgpt there.

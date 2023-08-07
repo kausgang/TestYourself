@@ -1,4 +1,8 @@
+// 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
+// https://dev.to/orama254/how-to-use-environment-variables-in-vite-react-template-example-34ff
+
 import { useState, useEffect } from "react";
+// import { process } from "process";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 // import './App.css'
@@ -16,7 +20,15 @@ import AddQuestion from "./Component/AddQuestion";
 import Practice from "./Component/Practice";
 import QAAccordian from "./Component/QAAccordian";
 
+import { Configuration, OpenAIApi } from "openai";
+
 function App() {
+  // ChatGPT configuration
+  const configuration = new Configuration({
+    // organization: "org-d2FIhjoTfzf2MLVW7zLbFWtP",
+    apikey: import.meta.env.VITE_OPENAI_API_KEY,
+  });
+
   const urls = {
     showDBs: "http://localhost:4000/showDBs",
     createDB: "http://localhost:4000/createDB",
@@ -175,7 +187,7 @@ function App() {
     fetch(urls.getQuestionOne + "?dbname=" + selectedDB)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         if (data.length !== 0) {
           setQuestion(data.question);
           setAnswer(data.answer);
@@ -259,6 +271,12 @@ function App() {
         alert("Server Down");
       });
   };
+
+  const gpt = async () => {
+    const openai = new OpenAIApi(configuration);
+    const response = await openai.console.log(response);
+  };
+
   return (
     <>
       <Container>
@@ -299,6 +317,7 @@ function App() {
                 reference={reference}
                 changeQuestion={changeQuestion}
               />
+              <Button onClick={gpt}>adsa</Button>
             </div>
             <div hidden={viewShowAll ? false : true}>
               <ul>{showAllList}</ul>

@@ -1,3 +1,5 @@
+const { Configuration, OpenAIApi } = require("openai");
+
 var express = require("express");
 var router = express.Router();
 
@@ -97,5 +99,27 @@ router.get("/getQuestionOne", function (req, res, next) {
   });
 
   db.close();
+});
+
+router.post("/gpt", async function (req, res, next) {
+  //get the DBname from client application
+  let prompt = req.body.prompt;
+
+  console.log(prompt);
+
+  const configuration = new Configuration({
+    apiKey: process.env.OPENAI_API_KEY,
+  });
+  const openai = new OpenAIApi(configuration);
+
+  const response = await openai.createCompletion({
+    model: "gpt-3.5-turbo",
+    prompt: "Say this is a test",
+    max_tokens: 7,
+    temperature: 0,
+  });
+  console.log(response);
+
+  // res.send(JSON.stringify(response), 200);
 });
 module.exports = router;

@@ -1,6 +1,3 @@
-// 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
-// https://dev.to/orama254/how-to-use-environment-variables-in-vite-react-template-example-34ff
-
 import { useState, useEffect } from "react";
 // import { process } from "process";
 import reactLogo from "./assets/react.svg";
@@ -20,22 +17,16 @@ import AddQuestion from "./Component/AddQuestion";
 import Practice from "./Component/Practice";
 import QAAccordian from "./Component/QAAccordian";
 
-import { Configuration, OpenAIApi } from "openai";
-
 function App() {
-  // ChatGPT configuration
-  const configuration = new Configuration({
-    // organization: "org-d2FIhjoTfzf2MLVW7zLbFWtP",
-    apikey: import.meta.env.VITE_OPENAI_API_KEY,
-  });
-
   const urls = {
     showDBs: "http://localhost:4000/showDBs",
     createDB: "http://localhost:4000/createDB",
     addQuestion: "http://localhost:4000/addQuestion",
     getQuestionOne: "http://localhost:4000/getQuestionOne",
     getQuestionAll: "http://localhost:4000/getQuestionAll",
+    gpt: "http://localhost:4000/gpt",
   };
+
   const [db, setDb] = useState([]);
   const [viewAddQuestion, setViewAddQuestion] = useState(false);
   const [viewPractice, setViewPractice] = useState(false);
@@ -273,8 +264,23 @@ function App() {
   };
 
   const gpt = async () => {
-    const openai = new OpenAIApi(configuration);
-    const response = await openai.console.log(response);
+    let data = { prompt: "hi" };
+
+    const response = await fetch(urls.gpt, {
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      mode: "cors", // no-cors, *cors, same-origin
+      cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: "same-origin", // include, *same-origin, omit
+      headers: {
+        "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      redirect: "follow", // manual, *follow, error
+      referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+      body: JSON.stringify(data), // body data type must match "Content-Type" header
+    });
+
+    console.log(response);
   };
 
   return (
@@ -317,7 +323,7 @@ function App() {
                 reference={reference}
                 changeQuestion={changeQuestion}
               />
-              <Button onClick={gpt}>adsa</Button>
+              <Button onClick={gpt}>GPT</Button>
             </div>
             <div hidden={viewShowAll ? false : true}>
               <ul>{showAllList}</ul>

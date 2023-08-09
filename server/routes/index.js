@@ -105,21 +105,21 @@ router.post("/gpt", async function (req, res, next) {
   //get the DBname from client application
   let prompt = req.body.prompt;
 
-  console.log(prompt);
-
   const configuration = new Configuration({
     apiKey: process.env.OPENAI_API_KEY,
   });
   const openai = new OpenAIApi(configuration);
 
-  const response = await openai.createCompletion({
+  const response = await openai.createChatCompletion({
     model: "gpt-3.5-turbo",
-    prompt: "Say this is a test",
-    max_tokens: 7,
-    temperature: 0,
+    messages: [
+      { role: "system", content: "You are a helpful assistant." },
+      { role: "user", content: "tell me a joke" },
+    ],
   });
-  console.log(response);
+  // console.log(response.data.choices[0].message);
 
-  // res.send(JSON.stringify(response), 200);
+  res.status(200).send(response.data.choices[0].message);
+  // res.send(JSON.stringify({ abc: "dasdasd" }));
 });
 module.exports = router;

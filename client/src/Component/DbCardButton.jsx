@@ -18,7 +18,7 @@ function DbCardButton(props) {
           Practice
         </Button>
 
-        <Button className="m-1" variant="info" onClick={showAll}>
+        <Button className="m-1" variant="outline-dark" onClick={showAll}>
           Show All
         </Button>
       </ButtonToolbar>

@@ -40,6 +40,22 @@ function App() {
   const [reference, setReference] = useState("");
   const [showAllList, setShowAllList] = useState("");
 
+  //show the databases when the page loads
+  useEffect(() => {
+    fetch(urls.showDBs)
+      .then((res) => res.json())
+      .then((data) => {
+        showDBs(data);
+      })
+      .catch((error) => {
+        console.error(
+          "There has been a problem with your fetch operation:",
+          error
+        );
+        alert("Server Down");
+      });
+  }, []);
+
   //if DB tab is clicked, fetch the list of dbs and show in cards
   const showDBs = (data) => {
     // setViewHideDB(true);
@@ -319,11 +335,11 @@ function App() {
   return (
     <>
       <Container>
-        <Row>
+        {/* <Row>
           <Col>
             <Navbar urls={urls} showDBs={showDBs} />
           </Col>
-        </Row>
+        </Row> */}
         <Row>
           <Stack direction="horizontal" gap={3} className="mt-3">
             {/* <SearchBar onSearch={onSearch} /> */}

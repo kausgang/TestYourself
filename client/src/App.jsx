@@ -17,15 +17,17 @@ import AddQuestion from "./Component/AddQuestion";
 import Practice from "./Component/Practice";
 import QAAccordian from "./Component/QAAccordian";
 
+import { urls } from "./URL/url";
+
 function App() {
-  const urls = {
-    showDBs: "http://localhost:4000/showDBs",
-    createDB: "http://localhost:4000/createDB",
-    addQuestion: "http://localhost:4000/addQuestion",
-    getQuestionOne: "http://localhost:4000/getQuestionOne",
-    getQuestionAll: "http://localhost:4000/getQuestionAll",
-    gpt: "http://localhost:4000/gpt",
-  };
+  // const urls = {
+  //   showDBs: "http://localhost:4000/showDBs",
+  //   createDB: "http://localhost:4000/createDB",
+  //   addQuestion: "http://localhost:4000/addQuestion",
+  //   getQuestionOne: "http://localhost:4000/getQuestionOne",
+  //   getQuestionAll: "http://localhost:4000/getQuestionAll",
+  //   gpt: "http://localhost:4000/gpt",
+  // };
 
   const [db, setDb] = useState([]);
   const [viewAddQuestion, setViewAddQuestion] = useState(false);
@@ -264,7 +266,31 @@ function App() {
   };
 
   const gpt = async () => {
-    let data = { prompt: "hi" };
+    // get the context from user
+
+    const { value: context } = await Swal.fire({
+      input: "textarea",
+      inputLabel: "What is the context of the question",
+      inputPlaceholder: "Type the context of the question here...",
+      inputAttributes: {
+        "aria-label": "What is the context of the question",
+      },
+      showCancelButton: false,
+    });
+
+    // if (context) {
+    //   Swal.fire(context);
+    // }
+
+    setQuestion("Generating");
+    setAnswer("");
+    setReference("");
+
+    let prompt =
+      "Generate similar question based on the question given below - " +
+      question;
+
+    let data = { context, prompt };
 
     fetch(urls.gpt, {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
@@ -280,7 +306,10 @@ function App() {
       body: JSON.stringify(data), // body data type must match "Content-Type" header
     })
       .then((response) => response.json())
-      .then((data) => console.log(data));
+      .then((data) => {
+        console.log(data);
+        setQuestion(data.content);
+      });
 
     // postData(urls.gpt, data).then((data) => {
     //   console.log(data);
@@ -327,7 +356,25 @@ function App() {
                 reference={reference}
                 changeQuestion={changeQuestion}
               />
-              <Button onClick={gpt}>GPT</Button>
+
+              <Stack direction="horizontal" gap={3}>
+                <Button
+                  variant="primary"
+                  type="submit"
+                  className="mt-3"
+                  onClick={gpt}
+                >
+                  GPT
+                </Button>
+                <Button
+                  variant="primary"
+                  type="submit"
+                  className="mt-3 ms-auto"
+                  onClick={changeQuestion}
+                >
+                  Change Question
+                </Button>
+              </Stack>
             </div>
             <div hidden={viewShowAll ? false : true}>
               <ul>{showAllList}</ul>

@@ -103,6 +103,7 @@ router.get("/getQuestionOne", function (req, res, next) {
 
 router.post("/gpt", async function (req, res, next) {
   //get the DBname from client application
+  let context = req.body.context;
   let prompt = req.body.prompt;
 
   const configuration = new Configuration({
@@ -113,8 +114,8 @@ router.post("/gpt", async function (req, res, next) {
   const response = await openai.createChatCompletion({
     model: "gpt-3.5-turbo",
     messages: [
-      { role: "system", content: "You are a helpful assistant." },
-      { role: "user", content: "tell me a joke" },
+      { role: "system", content: context },
+      { role: "user", content: prompt },
     ],
   });
   // console.log(response.data.choices[0].message);

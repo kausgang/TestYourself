@@ -44,14 +44,14 @@ function Practice(props) {
         </Accordion.Item>
       </Accordion>
 
-      <Button
+      {/* <Button
         variant="primary"
         type="submit"
         className="mt-3"
         onClick={changeQuestion}
       >
         Change Question
-      </Button>
+      </Button> */}
     </>
   );
 }

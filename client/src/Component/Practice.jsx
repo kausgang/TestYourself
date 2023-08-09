@@ -22,12 +22,15 @@ function Practice(props) {
 
         <Form>
           <Form.Group className="mb-3">
-            <Form.Label>Your Answer</Form.Label>
+            <Form.Label>
+              <strong>Your Answer</strong>
+            </Form.Label>
             <Form.Control
               id="yourAnswer"
               as="textarea"
               placeholder="Enter your Answer"
               style={{ height: "100px" }}
+              className="bg-success p-2 text-dark bg-opacity-10"
             />
           </Form.Group>
         </Form>

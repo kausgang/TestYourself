@@ -7,7 +7,11 @@ function DbCard(props) {
   const practice = () => props.practice(props.title);
   const showAll = () => props.showAll(props.title);
   return (
-    <Card border="primary" style={{ width: "18rem" }}>
+    <Card
+      // className="bg-danger p-2 text-dark bg-opacity-10"
+      border="primary"
+      style={{ width: "18rem" }}
+    >
       <Card.Body>
         <Card.Title>{props.title}</Card.Title>
 

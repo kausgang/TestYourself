@@ -375,7 +375,7 @@ function App() {
 
               <Stack direction="horizontal" gap={3}>
                 <Button
-                  variant="primary"
+                  variant="success"
                   type="submit"
                   className="mt-3"
                   onClick={gpt}

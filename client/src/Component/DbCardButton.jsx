@@ -19,7 +19,7 @@ function DbCardButton(props) {
         </Button>
 
         <Button className="m-1" variant="outline-dark" onClick={showAll}>
-          Show All
+          Show All Questions
         </Button>
       </ButtonToolbar>
     </div>

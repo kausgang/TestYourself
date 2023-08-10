@@ -14,7 +14,9 @@ function Practice(props) {
     <>
       <Accordion defaultActiveKey={["0"]} alwaysOpen>
         <Accordion.Item eventKey="0">
-          <Accordion.Header>Question</Accordion.Header>
+          <Accordion.Header>
+            <strong>Question</strong>
+          </Accordion.Header>
           <div style={{ whiteSpace: "pre-wrap" }}>
             <Accordion.Body>{props.question}</Accordion.Body>
           </div>
@@ -36,13 +38,17 @@ function Practice(props) {
         </Form>
 
         <Accordion.Item eventKey="1">
-          <Accordion.Header>Actual Answer</Accordion.Header>
+          <Accordion.Header>
+            <strong>Actual Answer</strong>
+          </Accordion.Header>
           <div style={{ whiteSpace: "pre-wrap" }}>
             <Accordion.Body>{props.answer}</Accordion.Body>
           </div>
         </Accordion.Item>
         <Accordion.Item eventKey="2">
-          <Accordion.Header>Reference</Accordion.Header>
+          <Accordion.Header>
+            <strong>Reference</strong>
+          </Accordion.Header>
           <Accordion.Body>{props.reference}</Accordion.Body>
         </Accordion.Item>
       </Accordion>

@@ -284,9 +284,10 @@ function App() {
   const gpt = async () => {
     // get the context from user
 
-    const { value: context } = await Swal.fire({
-      input: "textarea",
-      inputLabel: "What is the context of the question",
+    const { value: oldcontext } = await Swal.fire({
+      input: "text",
+      inputLabel:
+        "You want GPT to be a _______________ while generating similar question",
       inputPlaceholder: "Type the context of the question here...",
       inputAttributes: {
         "aria-label": "What is the context of the question",
@@ -305,6 +306,8 @@ function App() {
     let prompt =
       "Generate similar question based on the question given below - " +
       question;
+
+    let context = "You are a helpful " + oldcontext;
 
     let data = { context, prompt };
 

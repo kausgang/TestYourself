@@ -5,4 +5,5 @@ export const urls = {
   getQuestionOne: "http://localhost:4000/getQuestionOne",
   getQuestionAll: "http://localhost:4000/getQuestionAll",
   gpt: "http://localhost:4000/gpt",
+  updateQuestion: "http://localhost:4000/updateQuestion",
 };

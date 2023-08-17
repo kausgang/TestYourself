@@ -123,4 +123,42 @@ router.post("/gpt", async function (req, res, next) {
   res.status(200).send(response.data.choices[0].message);
   // res.send(JSON.stringify({ abc: "dasdasd" }));
 });
+
+router.post("/updateQuestion", async function (req, res, next) {
+  let dbname = req.body.selectedDB;
+  let id = req.body.id;
+  let newquestion = req.body.newquestion;
+
+  console.log(dbname);
+
+  //get the DBname from client application
+
+  let db = new sqlite3.Database("public/DB/" + dbname);
+
+  let data = [newquestion, id];
+  let sql = `UPDATE questions
+  SET question=? 
+  WHERE ID=?`;
+
+  db.run(sql, data, function (err) {
+    if (err) {
+      return console.error(err.message);
+    }
+    console.log(`Row(s) updated: ${this.changes}`);
+  });
+
+  // send the updated question again
+  sql = `SELECT * FROM questions WHERE ID='` + id + `'`;
+
+  db.all(sql, [], (err, rows) => {
+    if (err) {
+      throw err;
+    }
+    res.send(rows[0]);
+  });
+
+  db.close();
+
+  // res.send({ status: 200 });
+});
 module.exports = router;

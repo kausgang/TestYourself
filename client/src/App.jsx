@@ -35,6 +35,7 @@ function App() {
   const [viewShowAll, setViewShowAll] = useState(false);
   // const [viewHidedb, setViewHideDB] = useState(false);
   const [selectedDB, setSelectedDB] = useState("");
+  const [id, setId] = useState("");
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
   const [reference, setReference] = useState("");
@@ -189,6 +190,7 @@ function App() {
     setViewAddQuestion(false);
     setViewShowAll(false);
 
+    setId("");
     setQuestion("");
     setAnswer("");
     setReference("");
@@ -196,8 +198,9 @@ function App() {
     fetch(urls.getQuestionOne + "?dbname=" + selectedDB)
       .then((res) => res.json())
       .then((data) => {
-        // console.log(data);
+        console.log(data);
         if (data.length !== 0) {
+          setId(data.ID);
           setQuestion(data.question);
           setAnswer(data.answer);
           setReference(data.reference);
@@ -234,7 +237,8 @@ function App() {
     fetch(urls.getQuestionOne + "?dbname=" + selectedDB)
       .then((res) => res.json())
       .then((data) => {
-        // console.log(data);
+        console.log(data);
+        setId(data.ID);
         setQuestion(data.question);
         setAnswer(data.answer);
         setReference(data.reference);
@@ -335,6 +339,49 @@ function App() {
     // });
   };
 
+  const updateQuestion = async (e) => {
+    let innerText = e.target.innerText;
+
+    // // e.target.innerText === "Update"
+    // //   ? (e.target.innerText = "Submit")
+    // //   : (e.target.innerText = "Update");
+
+    // // if (innerText === "Submit") {
+    const { value: newquestion } = await Swal.fire({
+      input: "textarea",
+      inputLabel: question,
+      inputPlaceholder:
+        "Copy and Paste the Question from above and make necessary modification",
+      // inputAttributes: {
+      //   "aria-label": "What is the context of the question",
+      // },
+      showCancelButton: false,
+    });
+
+    let data = { selectedDB, id, newquestion };
+
+    fetch(urls.updateQuestion, {
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
+
+      headers: {
+        "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+
+      body: JSON.stringify(data), // body data type must match "Content-Type" header
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+
+        setId(data.ID);
+        setQuestion(data.question);
+        setAnswer(data.answer);
+        setReference(data.reference);
+      });
+    // }
+  };
+
   return (
     <>
       <Container>
@@ -385,6 +432,16 @@ function App() {
                 >
                   GPT
                 </Button>
+
+                <Button
+                  variant="info"
+                  type="submit"
+                  className="mt-3"
+                  onClick={updateQuestion}
+                >
+                  Update
+                </Button>
+
                 <Button
                   variant="primary"
                   type="submit"

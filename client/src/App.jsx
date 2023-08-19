@@ -263,16 +263,20 @@ function App() {
     fetch(urls.getQuestionAll + "?dbname=" + selectedDB)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
 
         setShowAllList(
           data.map((item, index) => (
-            <QAAccordian
-              key={index}
-              question={item.question}
-              answer={item.answer}
-              reference={item.reference}
-            />
+            <div key={index}>
+              <QAAccordian
+                key={index}
+                question={item.question}
+                answer={item.answer}
+                reference={item.reference}
+              />
+              {/* <Button onClick={updateSelected}>Update</Button> */}
+              <hr />
+            </div>
           ))
         );
       })
@@ -340,7 +344,7 @@ function App() {
   };
 
   const updateQuestion = async (e) => {
-    let innerText = e.target.innerText;
+    // let innerText = e.target.innerText;
 
     // // e.target.innerText === "Update"
     // //   ? (e.target.innerText = "Submit")
@@ -382,6 +386,9 @@ function App() {
     // }
   };
 
+  const updateSelected = async (e) => {
+    console.log(e.target);
+  };
   return (
     <>
       <Container>

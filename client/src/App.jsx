@@ -275,6 +275,7 @@ function App() {
                 reference={item.reference}
               />
               <Button
+                variant="info"
                 data-id={item.ID}
                 data-question={item.question}
                 data-db={selectedDB}

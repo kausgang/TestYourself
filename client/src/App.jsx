@@ -367,30 +367,33 @@ function App() {
       // inputAttributes: {
       //   "aria-label": "What is the context of the question",
       // },
-      showCancelButton: false,
+      showCancelButton: true,
     });
 
     let data = { selectedDB, id, newquestion };
 
-    fetch(urls.updateQuestion, {
-      method: "POST", // *GET, POST, PUT, DELETE, etc.
+    if (newquestion !== undefined) {
+      fetch(urls.updateQuestion, {
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
 
-      headers: {
-        "Content-Type": "application/json",
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
+        headers: {
+          "Content-Type": "application/json",
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
 
-      body: JSON.stringify(data), // body data type must match "Content-Type" header
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
+        body: JSON.stringify(data), // body data type must match "Content-Type" header
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
 
-        setId(data.ID);
-        setQuestion(data.question);
-        setAnswer(data.answer);
-        setReference(data.reference);
-      });
+          setId(data.ID);
+          setQuestion(data.question);
+          setAnswer(data.answer);
+          setReference(data.reference);
+        });
+    }
+
     // }
   };
 
@@ -411,39 +414,44 @@ function App() {
       // inputAttributes: {
       //   "aria-label": "What is the context of the question",
       // },
-      showCancelButton: false,
+      showCancelButton: true,
     });
 
     let data = { selectedDB, id, newquestion };
 
-    fetch(urls.updateQuestion, {
-      method: "POST", // *GET, POST, PUT, DELETE, etc.
+    console.log(newquestion);
 
-      headers: {
-        "Content-Type": "application/json",
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
+    if (newquestion !== undefined) {
+      fetch(urls.updateQuestion, {
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
 
-      body: JSON.stringify(data), // body data type must match "Content-Type" header
-    })
-      .then((response) => {
-        // console.log(response.status);
-        // response.json();
+        headers: {
+          "Content-Type": "application/json",
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
 
-        if (response.status === 200)
-          Swal.fire(
-            "Updated!",
-            "Show All Questions to see the update",
-            "success"
-          );
+        body: JSON.stringify(data), // body data type must match "Content-Type" header
       })
-      .catch((error) => {
-        console.error(
-          "There has been a problem with your fetch operation:",
-          error
-        );
-        alert("Server Down");
-      });
+        .then((response) => {
+          // console.log(response.status);
+          // response.json();
+
+          if (response.status === 200)
+            Swal.fire(
+              "Updated!",
+              "Show All Questions to see the update",
+              "success"
+            );
+        })
+        .catch((error) => {
+          console.error(
+            "There has been a problem with your fetch operation:",
+            error
+          );
+          alert("Server Down");
+        });
+    }
+
     // .then((data) => {
     //   // console.log(data);
 

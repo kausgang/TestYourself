@@ -40,6 +40,7 @@ function App() {
   const [answer, setAnswer] = useState("");
   const [reference, setReference] = useState("");
   const [showAllList, setShowAllList] = useState("");
+  const [totalitem, setTotalitem] = useState("");
 
   //show the databases when the page loads
   useEffect(() => {
@@ -177,6 +178,7 @@ function App() {
     setViewPractice(false);
     setViewShowAll(false);
     setSelectedDB(selectedDB);
+    setTotalitem("");
   };
 
   //on practice
@@ -194,6 +196,8 @@ function App() {
     setQuestion("");
     setAnswer("");
     setReference("");
+
+    setTotalitem("");
 
     fetch(urls.getQuestionOne + "?dbname=" + selectedDB)
       .then((res) => res.json())
@@ -234,6 +238,7 @@ function App() {
   };
 
   const changeQuestion = async () => {
+    setTotalitem("");
     fetch(urls.getQuestionOne + "?dbname=" + selectedDB)
       .then((res) => res.json())
       .then((data) => {
@@ -263,8 +268,9 @@ function App() {
     fetch(urls.getQuestionAll + "?dbname=" + selectedDB)
       .then((res) => res.json())
       .then((data) => {
-        // console.log(data);
+        console.log(data);
 
+        setTotalitem(data.length);
         setShowAllList(
           data.map((item, index) => (
             <div key={index}>
@@ -483,7 +489,9 @@ function App() {
             <h6>
               Selected DB - <span className="text-danger">{selectedDB}</span>
             </h6>
-
+            <em>
+              # of Items - <span className="text-danger">{totalitem}</span>
+            </em>
             <Stack gap={3}>{db}</Stack>
           </Col>
 

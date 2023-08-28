@@ -281,13 +281,23 @@ function App() {
                 reference={item.reference}
               />
               <Button
-                variant="info"
+                variant="primary"
+                className="m-1"
                 data-id={item.ID}
                 data-question={item.question}
                 data-db={selectedDB}
                 onClick={updateSelected}
               >
-                Update
+                Update Question
+              </Button>
+              <Button
+                variant="secondary"
+                data-id={item.ID}
+                data-answer={item.answer}
+                data-db={selectedDB}
+                onClick={updateAnswer}
+              >
+                Update Ans
               </Button>
               <hr />
             </div>
@@ -467,6 +477,72 @@ function App() {
     //   // setReference(data.reference);
     // });
   };
+
+  const updateAnswer = async (e) => {
+    const id = e.target.dataset.id;
+    const answer = e.target.dataset.answer;
+    const selectedDB = e.target.dataset.db;
+
+    // console.log(selectedDB);
+
+    // console.log("db=", selectedDB);
+
+    const { value: newquestion } = await Swal.fire({
+      input: "textarea",
+      inputLabel: answer,
+      inputPlaceholder:
+        "Copy and Paste the Answer from above and make necessary modification",
+      // inputAttributes: {
+      //   "aria-label": "What is the context of the question",
+      // },
+      showCancelButton: true,
+    });
+
+    let data = { selectedDB, id, newquestion };
+
+    console.log(newquestion);
+
+    if (newquestion !== undefined) {
+      fetch(urls.updateAnswer, {
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
+
+        headers: {
+          "Content-Type": "application/json",
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+
+        body: JSON.stringify(data), // body data type must match "Content-Type" header
+      })
+        .then((response) => {
+          // console.log(response.status);
+          // response.json();
+
+          if (response.status === 200)
+            Swal.fire(
+              "Updated!",
+              "Show All Questions to see the update",
+              "success"
+            );
+        })
+        .catch((error) => {
+          console.error(
+            "There has been a problem with your fetch operation:",
+            error
+          );
+          alert("Server Down");
+        });
+    }
+
+    // .then((data) => {
+    //   // console.log(data);
+
+    //   // setId(data.ID);
+    //   // setQuestion(data.question);
+    //   // setAnswer(data.answer);
+    //   // setReference(data.reference);
+    // });
+  };
+
   return (
     <>
       <Container>

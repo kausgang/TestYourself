@@ -297,7 +297,7 @@ function App() {
                 data-db={selectedDB}
                 onClick={updateAnswer}
               >
-                Update Ans
+                Update Answer
               </Button>
               <hr />
             </div>
